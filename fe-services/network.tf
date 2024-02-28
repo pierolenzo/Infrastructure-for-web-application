@@ -26,7 +26,6 @@ module "alb" {
   name     = local.name
   internal = false
 
-  # For example only
   enable_deletion_protection = false
 
   vpc_id  = data.aws_vpc.vpc.id
@@ -46,7 +45,6 @@ module "alb" {
       cidr_ipv4   = subnet.cidr_block
     }
   }
-
 
   listeners = {
     http = {

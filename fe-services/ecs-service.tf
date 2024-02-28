@@ -27,7 +27,12 @@ module "ecs_service" {
           containerPort = local.container_port
         }
       ]
+
       environment = [
+        {
+          name  = "ENVIRONMENT",
+          value = var.env
+        },
         {
           name  = "NODEJS_URL",
           value = local.backend_url

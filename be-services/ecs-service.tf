@@ -28,6 +28,13 @@ module "ecs_service" {
         }
       ]
 
+      environment = [
+        {
+          name  = "ENVIRONMENT",
+          value = var.env
+        }
+      ]
+
       enable_cloudwatch_logging              = true
       create_cloudwatch_log_group            = true
       cloudwatch_log_group_name              = "/aws/ecs/${local.service_name}/${local.container_name}"

@@ -49,7 +49,7 @@ data "aws_subnet" "private_cidr" {
 }
 
 data "aws_ecs_cluster" "core_infra" {
-  cluster_name = "${var.project_name}-${var.env}"
+  cluster_name = local.name
 }
 
 data "aws_service_discovery_dns_namespace" "this" {
@@ -61,12 +61,11 @@ data "aws_service_discovery_dns_namespace" "this" {
 locals {
   name = "${var.project_name}-${var.env}"
 
-
   docker_image_url = "public.ecr.aws/nginx/nginx:mainline"
   service_name     = "${var.project_name}-fe-${var.env}"
   container_port   = 80 # Container port is specific to this app example
   container_name   = "${var.project_name}-ecs-fe-${var.env}"
 
-  backend_url = "http://webapp-be-prod.default.webapp-prod.local:${local.container_port}"
+  backend_url = "http://webapp-be-prod.${data.aws_service_discovery_dns_namespace.this.name}:${local.container_port}"
 
 }
