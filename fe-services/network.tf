@@ -1,6 +1,6 @@
 ## Service Discovery
 resource "aws_service_discovery_service" "this" {
-  name = local.name
+  name = local.service_name
 
   dns_config {
     namespace_id = data.aws_service_discovery_dns_namespace.this.id

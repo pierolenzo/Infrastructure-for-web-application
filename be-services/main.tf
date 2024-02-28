@@ -22,20 +22,6 @@ provider "aws" {
 }
 
 ## Data
-data "aws_vpc" "vpc" {
-  filter {
-    name   = "tag:Name"
-    values = [local.name]
-  }
-}
-
-data "aws_subnets" "public" {
-  filter {
-    name   = "tag:Name"
-    values = ["${local.name}-public-*"]
-  }
-}
-
 data "aws_subnets" "private" {
   filter {
     name   = "tag:Name"
@@ -43,13 +29,8 @@ data "aws_subnets" "private" {
   }
 }
 
-data "aws_subnet" "private_cidr" {
-  for_each = toset(data.aws_subnets.private.ids)
-  id       = each.value
-}
-
 data "aws_ecs_cluster" "core_infra" {
-  cluster_name = "${var.project_name}-${var.env}"
+  cluster_name = local.name
 }
 
 data "aws_service_discovery_dns_namespace" "this" {
@@ -61,12 +42,8 @@ data "aws_service_discovery_dns_namespace" "this" {
 locals {
   name = "${var.project_name}-${var.env}"
 
-
   docker_image_url = "public.ecr.aws/nginx/nginx:mainline"
-  service_name     = "${var.project_name}-fe-${var.env}"
+  service_name     = "${var.project_name}-be-${var.env}"
   container_port   = 80 # Container port is specific to this app example
-  container_name   = "${var.project_name}-ecs-fe-${var.env}"
-
-  backend_url = "http://webapp-be-prod.default.webapp-prod.local:${local.container_port}"
-
+  container_name   = "${var.project_name}-ecs-be-${var.env}"
 }
