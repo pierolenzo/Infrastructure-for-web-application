@@ -77,7 +77,7 @@ terraform plan -var-file=./env/prod/terraform.tfvars
 terraform apply -var-file=./env/prod/terraform.tfvars
 ```
 
-I you don't have your domain name, point the below URL with your browser
+If you don't have your domain name, point the below URL with your browser
 
 ```shell
 Outputs:
