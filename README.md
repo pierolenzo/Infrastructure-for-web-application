@@ -67,7 +67,7 @@ cd ../fe-services
 * into file `env/prod/terraform.tfvars`
   * configure the variable `docker_image_url`  with your docker image
   * If you want to use your own domain configured in route53, set the variable `create_route53_record = true` and put the domain name in `domain_name`.
-  * > [!NOTICE] an alternative, set "create_route53_record" to "false" if you don't have a domain and want to test the infrastructure quickly.
+  * > [!NOTE] an alternative, set "create_route53_record" to "false" if you don't have a domain and want to test the infrastructure quickly.
 
 ```shell
 terraform init
