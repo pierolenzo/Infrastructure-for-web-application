@@ -59,3 +59,14 @@ terraform init
 terraform plan
 terraform apply
 ```
+
+The output should be like this. 
+
+```shell
+Outputs:
+
+application_url = "https://webapp-prod-xxxxxxxx.eu-south-1.elb.amazonaws.com"
+```
+
+> [!WARNING]  
+> The TLS certificate is self signed, in a prod enviroment change it.

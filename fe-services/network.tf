@@ -18,6 +18,33 @@ resource "aws_service_discovery_service" "this" {
   }
 }
 
+## TLS Self Signed
+resource "tls_private_key" "webapp" {
+  algorithm = "RSA"
+}
+
+resource "tls_self_signed_cert" "webapp" {
+  private_key_pem = tls_private_key.webapp.private_key_pem
+
+  subject {
+    common_name  = "*.amazonaws.com"
+    organization = "Piero Lenzo"
+  }
+
+  validity_period_hours = 12
+
+  allowed_uses = [
+    "key_encipherment",
+    "digital_signature",
+    "server_auth",
+  ]
+}
+
+resource "aws_acm_certificate" "cert" {
+  private_key      = tls_private_key.webapp.private_key_pem
+  certificate_body = tls_self_signed_cert.webapp.cert_pem
+}
+
 ## ALB
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
@@ -38,6 +65,13 @@ module "alb" {
       description = "HTTP web traffic"
       cidr_ipv4   = "0.0.0.0/0"
     }
+    all_https = {
+      from_port   = 443
+      to_port     = 443
+      ip_protocol = "tcp"
+      description = "HTTPS web traffic"
+      cidr_ipv4   = "0.0.0.0/0"
+    }
   }
   security_group_egress_rules = { for subnet in data.aws_subnet.private_cidr :
     (subnet.availability_zone) => {
@@ -51,10 +85,23 @@ module "alb" {
       port     = "80"
       protocol = "HTTP"
 
+      redirect = {
+        port        = "443"
+        protocol    = "HTTPS"
+        status_code = "HTTP_301"
+      }
+    }
+
+    https = {
+      port            = 443
+      protocol        = "HTTPS"
+      certificate_arn = aws_acm_certificate.cert.arn
+
       forward = {
         target_group_key = "ecs-task"
       }
     }
+
   }
 
   target_groups = {

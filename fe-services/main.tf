@@ -7,6 +7,11 @@ terraform {
       source  = "hashicorp/aws"
       version = ">= 5.38"
     }
+
+    tls = {
+      source  = "hashicorp/tls"
+      version = "4.0.5"
+    }
   }
 }
 
@@ -20,6 +25,8 @@ provider "aws" {
     }
   }
 }
+
+provider "tls" {}
 
 ## Data
 data "aws_vpc" "vpc" {
