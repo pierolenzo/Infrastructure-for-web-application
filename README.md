@@ -35,10 +35,8 @@ git clone https://github.com/pierolenzo/Infrastructure-for-web-application.git
 
 ```
 
-2. Configure `local.docker_image_url` for both `fe-service` and `be-service`. Edit the respective `main.tf` files.
+2. Start with `core-infra` to create core infrastructure (cluster, VPC)
 
-3. Start with `core-infra` to create core infrastructure (cluster, VPC)
-   
 ```shell
 cd Infrastructure-for-web-application/core-infra/
 terraform init
@@ -46,25 +44,38 @@ terraform plan
 terraform apply
 ```
 
-4. deploy a backend service
+3. Deploy a backend service
 
 ```shell
 cd ../be-services
+```
+* into file `env/prod/terraform.tfvars`
+  * configure the variable `docker_image_url`  with your docker image
+
+```shell
 terraform init
-terraform plan
-terraform apply
+terraform plan -var-file=./env/prod/terraform.tfvars
+terraform apply -var-file=./env/prod/terraform.tfvars
 ```
 
-5.  deploy a frontend service
+4.  deploy a frontend service
 
 ```shell
 cd ../fe-services
-terraform init
-terraform plan
-terraform apply
 ```
 
-The output should be like this. 
+* into file `env/prod/terraform.tfvars`
+  * configure the variable `docker_image_url`  with your docker image
+  * If you want to use your own domain configured in route53, set the variable `create_route53_record = true` and put the domain name in `domain_name`.
+  * > [!NOTICE] an alternative, set "create_route53_record" to "false" if you don't have a domain and want to test the infrastructure quickly.
+
+```shell
+terraform init
+terraform plan -var-file=./env/prod/terraform.tfvars
+terraform apply -var-file=./env/prod/terraform.tfvars
+```
+
+I you don't have your domain name, point the below URL with your browser
 
 ```shell
 Outputs:
