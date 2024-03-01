@@ -34,7 +34,7 @@ module "ecs_service" {
           value = var.env
         },
         {
-          name  = "NODEJS_URL",
+          name  = "BACKEND_URL",
           value = local.backend_url
         }
       ]
