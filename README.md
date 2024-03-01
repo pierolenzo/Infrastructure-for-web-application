@@ -1,11 +1,11 @@
 # Infrastructure-for-web-application
-Infrastructure to publish a web application (frontend and backend) on the Internet.
+Basic Infrastructure to publish a web application (frontend and backend) on the Internet.
 
 <p align="center">
   <img src="docs/Infrastructure For Webapp.drawio.png"/>
 </p>
 
-## Prerequisites
+## Requirements
 
 * [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 
@@ -26,17 +26,15 @@ aws_secret_access_key = Replace_with_the_correct_secret_Key
 export AWS_PROFILE=your_profile_name
 ```
 
-## Install the resources
+## Deploy the resources
 
-* Fork this repository.
-
-* Clone your forked repository to your laptop.
+1. Clone this repository.
 
 ```shell
 git clone https://github.com/pierolenzo/Infrastructure-for-web-application.git
 ```
 
-* Start with `core-infra` to create cluster, VPC
+2. Start with `core-infra` to create core infrastructure (cluster, VPC)
 
 ```shell
 cd Infrastructure-for-web-application/core-infra/
@@ -45,7 +43,7 @@ terraform init
 terraform plan
 terraform apply
 ```
-* Now we can deploy a backend service
+3. deploy a backend service
 
 ```shell
 cd ../be-services
@@ -53,7 +51,7 @@ terraform init
 terraform plan
 terraform apply
 ```
-* Now we can deploy a frontend service
+4.  deploy a frontend service
 
 ```shell
 cd ../fe-services
@@ -61,5 +59,3 @@ terraform init
 terraform plan
 terraform apply
 ```
-
-You can use the ALB URL from terraform output to access the load balanced service. 
