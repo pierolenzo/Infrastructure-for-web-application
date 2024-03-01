@@ -32,18 +32,21 @@ export AWS_PROFILE=your_profile_name
 
 ```shell
 git clone https://github.com/pierolenzo/Infrastructure-for-web-application.git
+
 ```
 
-2. Start with `core-infra` to create core infrastructure (cluster, VPC)
+2. Configure `local.docker_image_url` for both `fe-service` and `be-service`. Edit the respective `main.tf` files.
 
+3. Start with `core-infra` to create core infrastructure (cluster, VPC)
+   
 ```shell
 cd Infrastructure-for-web-application/core-infra/
-
 terraform init
 terraform plan
 terraform apply
 ```
-3. deploy a backend service
+
+4. deploy a backend service
 
 ```shell
 cd ../be-services
@@ -51,7 +54,8 @@ terraform init
 terraform plan
 terraform apply
 ```
-4.  deploy a frontend service
+
+5.  deploy a frontend service
 
 ```shell
 cd ../fe-services
