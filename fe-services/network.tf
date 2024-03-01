@@ -27,7 +27,7 @@ resource "tls_self_signed_cert" "webapp" {
   private_key_pem = tls_private_key.webapp.private_key_pem
 
   subject {
-    common_name  = "*.amazonaws.com"
+    common_name  = local.domain_name
     organization = "Piero Lenzo"
   }
 

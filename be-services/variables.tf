@@ -21,3 +21,9 @@ variable "vpc_cidr" {
   type        = string
   default     = "10.0.0.0/16"
 }
+
+variable "docker_image_url" {
+  description = "The docker image"
+  type        = string
+  default     = "public.ecr.aws/nginx/nginx:mainline"
+}

@@ -68,7 +68,10 @@ data "aws_service_discovery_dns_namespace" "this" {
 locals {
   name = "${var.project_name}-${var.env}"
 
-  docker_image_url = "public.ecr.aws/nginx/nginx:mainline"
+  domain_name    = var.domain_name
+  fe_domain_name = "webapp.${var.domain_name}"
+
+  docker_image_url = var.docker_image_url
   service_name     = "${var.project_name}-fe-${var.env}"
   container_port   = 80 # Container port is specific to this app example
   container_name   = "${var.project_name}-ecs-fe-${var.env}"

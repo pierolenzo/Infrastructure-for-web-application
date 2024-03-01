@@ -1,0 +1,1 @@
+docker_image_url = "public.ecr.aws/nginx/nginx:mainline"
